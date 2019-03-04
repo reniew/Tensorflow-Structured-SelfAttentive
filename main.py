@@ -22,7 +22,7 @@ def main(self):
                                         model_dir = './check_point',
                                         config = configs)
     print('Training start')
-    estimator.train(dataset.train_input_function, hooks=[wandb.tensorflow.WandbHook(steps_per_log=1000)])
+    estimator.train(dataset.train_input_function, hooks=[wandb.tensorflow.WandbHook(steps_per_log=100)])
     estimator.evaluate(dataset.test_input_function)
 
 
