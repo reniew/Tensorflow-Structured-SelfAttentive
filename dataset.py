@@ -7,7 +7,7 @@ from tensorflow.data import Dataset
 
 class SentDataset:
 
-    def __init__(self, dataset, batch_size = 32, epoch = 10):
+    def __init__(self, dataset, batch_size = 32, epoch = 100):
         """
         Parameters:
             dataset: 'sst1' or 'sst2' or 'imdb'
