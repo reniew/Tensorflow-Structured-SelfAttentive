@@ -42,7 +42,7 @@ class Model:
         self.prediction = {'prediction': tf.round(logits), 'attention_output': attention_outputs}
 
         if not is_predict:
-            self._build_loss(logits, p)
+            self._build_loss(logits)
             self._build_train_op()
             self._build_metrics()
 
@@ -56,9 +56,9 @@ class Model:
 
         return accuracy
 
-    def _build_loss(self, logits, p):
+    def _build_loss(self, logits):
         self.prediction_loss = tf.losses.sigmoid_cross_entropy(self.targets, logits)
-        self.loss = prediction_loss + p
+        self.loss = self.prediction_loss + self.p
 
     def _build_train_op(self):
         self.global_step = tf.train.get_global_step()
