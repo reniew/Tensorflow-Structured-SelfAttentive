@@ -67,14 +67,17 @@ class SentDataset:
         current_index = 0
         length = len(x)
 
-        while current_index < length + self.batch_size:
-            batch_x = x[current_index:current_index+self.batch_size]
-            batch_y = np.expand_dims(y[current_index:current_index+self.batch_size], -1)
-            max_size = len(batch_x[-1])
+        while True:
+            if current_index > length:
+                return
+            else:
+                batch_x = x[current_index:current_index+self.batch_size]
+                batch_y = np.expand_dims(y[current_index:current_index+self.batch_size], -1)
+                max_size = len(batch_x[-1])
 
-            padded_x = pad_sequences(batch_x, maxlen = max_size, padding = 'post')
-            current_index += self.batch_size
-            yield padded_x, batch_y
+                padded_x = pad_sequences(batch_x, maxlen = max_size, padding = 'post')
+                current_index += self.batch_size
+                yield padded_x, batch_y
 
 
     def mapping_function(self, x, y):
