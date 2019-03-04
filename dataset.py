@@ -95,7 +95,7 @@ class SentDataset:
 
         return iterator.get_next()
 
-    def train_input_function(self):
+    def test_input_function(self):
         dataset = Dataset.from_generator(generator = lambda: self.data_generator(self.test_x, self.test_y),
                                         output_types = (tf.int32, tf.int32),
                                         output_shapes = ((None, None), (None, 1)))

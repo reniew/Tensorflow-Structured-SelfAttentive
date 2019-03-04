@@ -21,7 +21,9 @@ class Model:
         accuracy_for_train = self._evaluate()
 
         logging_summary_dictionary = {'accuracy': accuracy_for_train,
-                                    'progress': self.global_step // (25000//32)}
+                                    'progress': self.global_step // (25000//32),
+                                    'prediction_loss': self.prediction_loss,
+                                    'penalty': self.p}
 
         logging_hook = tf.train.LoggingTensorHook(logging_summary_dictionary, every_n_iter=100)
         self._write_summary(logging_summary_dictionary)
@@ -36,7 +38,7 @@ class Model:
 
     def _build_grpah(self, inputs, vocab_size, is_predict):
         graph = Graph(vocab_size = vocab_size)
-        logits, p, attention_outputs = graph.build_graph(inputs)
+        logits, self.p, attention_outputs = graph.build_graph(inputs)
         self.prediction = {'prediction': tf.round(logits), 'attention_output': attention_outputs}
 
         if not is_predict:
@@ -55,7 +57,7 @@ class Model:
         return accuracy
 
     def _build_loss(self, logits, p):
-        prediction_loss = tf.losses.sigmoid_cross_entropy(self.targets, logits)
+        self.prediction_loss = tf.losses.sigmoid_cross_entropy(self.targets, logits)
         self.loss = prediction_loss + p
 
     def _build_train_op(self):

@@ -81,4 +81,4 @@ class Graph:
          penaly = tf.matmul(a = a, b = a, transpose_b = True) - tf.eye(self.num_of_multihops)
          frobenius_norm = tf.norm(penaly, ord = 'fro', axis = [-2, -1])
 
-         return tf.reduce_sum(frobenius_norm)
+         return tf.reduce_mean(frobenius_norm)
