@@ -12,7 +12,7 @@ def main(self):
     params = {'vocab_size': dataset.vocab_size}
 
     session_config = tf.ConfigProto()
-    session_config.gpu_options.per_process_gpu_memory_fraction = 0.4
+    session_config.gpu_options.allow_growth = True
     configs = tf.contrib.learn.RunConfig(save_summary_steps = 1000,
                                         keep_checkpoint_max = 2,
                                         session_config = session_config)
