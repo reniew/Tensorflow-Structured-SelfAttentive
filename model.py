@@ -39,7 +39,7 @@ class Model:
     def _build_grpah(self, inputs, vocab_size, is_predict):
         graph = Graph(vocab_size = vocab_size)
         logits, self.p, attention_outputs = graph.build_graph(inputs)
-        self.prediction = {'prediction': tf.round(logits), 'attention_output': attention_outputs}
+        self.prediction = {'prediction': tf.round(tf.nn.sigmoid(logits)), 'attention_output': attention_outputs}
 
         if not is_predict:
             self._build_loss(logits)

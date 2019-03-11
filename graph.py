@@ -27,12 +27,12 @@ class Graph:
 
         self.embedding_layer = L.Embedding(input_dim = vocab_size, output_dim = embedding_dimension)
         self.dropout = L.Dropout(dropout_rate)
-        self.biLSTM = L.Bidirectional(L.LSTM(units = model_dimension, return_sequences = True))
+        self.biLSTM = L.Bidirectional(L.CuDNNLSTM(units = model_dimension, return_sequences = True))
         self.w_s1 = tf.get_variable('w_s1', shape = (attention_dimension, 2*model_dimension))
         self.w_s2 = tf.get_variable('w_s2', shape = (num_of_multihops, attention_dimension))
         self.fc1 = L.Dense(fully_connected_dimension, activation = tf.nn.relu)
         self.fc2 = L.Dense(fully_connected_dimension, activation = tf.nn.relu)
-        self.fc3 = L.Dense(1, activation = tf.nn.sigmoid)
+        self.fc3 = L.Dense(1)
         self.flatten = L.Flatten()
         self.num_of_multihops = num_of_multihops
         self.reuse = reuse
